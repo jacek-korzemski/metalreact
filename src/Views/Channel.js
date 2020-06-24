@@ -235,12 +235,6 @@ class Channel extends React.Component {
                   <Link
                     className="element"
                     key={index}
-                    // onClick={() =>
-                    //   this.startAlbum(
-                    //     element.list_videoLink,
-                    //     element.list_videoTitle
-                    //   )
-                    // }
                     to={
                       "/" +
                       this.props.match.params.channel +

@@ -55,7 +55,7 @@ const Player = (props) => {
   return (
     <PlayerWrapper>
       <div className="pagination">
-        <Link to={props.prevHandler}>
+        <Link to={props.nextHandler}>
           <span className="fa fa-angle-left"></span>
         </Link>
         <Link to={props.returnHandler}>
@@ -63,7 +63,7 @@ const Player = (props) => {
             X
           </span>
         </Link>
-        <Link to={props.nextHandler}>
+        <Link to={props.prevHandler}>
           <span className="fa fa-angle-right"></span>
         </Link>
       </div>
