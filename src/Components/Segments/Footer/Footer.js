@@ -21,7 +21,7 @@ const Footer = () => {
   return (
     <FooterWrapper>
       <p>
-        Prodly created in <span className="blue">REACT</span> by{" "}
+        Proudly created in <span className="blue">REACT</span> by{" "}
         <span className="blue">Jacek Korzemski</span>
       </p>
     </FooterWrapper>

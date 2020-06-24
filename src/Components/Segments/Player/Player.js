@@ -23,13 +23,25 @@ const PlayerWrapper = styled.div`
   }
   iframe {
     width: 100%;
-    height: calc(100vh - 320px);
+    height: calc(100vh - 420px);
+    max-width: 1400px;
+    margin-bottom: 32px;
   }
-  span.close {
-    font-size: 64px;
-    color: white;
-    cursor: pointer;
-    user-select: none;
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      margin: 0 16px;
+      display: block;
+      font-size: 64px;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      &:hover {
+        color: red;
+      }
+    }
   }
   a {
     color: white;
@@ -42,16 +54,24 @@ const Player = (props) => {
   href = href.replace("watch?v=", "embed/");
   return (
     <PlayerWrapper>
-      <Link to={props.returnHandler}>
-        <span className="close" onClick={() => props.closeHandler()}>
-          X
-        </span>
-      </Link>
+      <div className="pagination">
+        <Link to={props.prevHandler}>
+          <span className="fa fa-angle-left"></span>
+        </Link>
+        <Link to={props.returnHandler}>
+          <span className="close" onClick={() => props.closeHandler()}>
+            X
+          </span>
+        </Link>
+        <Link to={props.nextHandler}>
+          <span className="fa fa-angle-right"></span>
+        </Link>
+      </div>
       <iframe
         src={href}
         title={props.track.title}
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
+        allowFullScreen
         frameBorder={0}
       ></iframe>
       <h2>{props.track.title}</h2>

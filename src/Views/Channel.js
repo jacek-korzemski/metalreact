@@ -58,6 +58,11 @@ const ChannelWrapper = styled.div`
       @media (max-width: 640px) {
         width: 100%;
       }
+      &:hover {
+        .title {
+          color: red;
+        }
+      }
     }
     a {
       color: black;
@@ -76,6 +81,9 @@ const ChannelWrapper = styled.div`
       margin: 0 16px;
       color: black;
       text-decoration: none;
+      &:hover {
+        color: red;
+      }
     }
   }
 `;
@@ -111,12 +119,13 @@ class Channel extends React.Component {
     if (prevProps.match.params.page !== this.props.match.params.page) {
       this.chunkData(this.props.match.params.page);
     }
+    if (prevProps.match.params.album !== this.props.match.params.album) {
+      this.startAlbum(this.props.match.params.album);
+    }
   }
 
   componentDidMount() {
     this.loadData();
-    if (this.state.ready) {
-    }
   }
 
   loadData(withTrack) {
@@ -143,11 +152,13 @@ class Channel extends React.Component {
       .then((res) => {
         res.videos = Object.values(res.videos);
         res.videos.reverse();
-        console.log(res);
         this.setState({
           data: res,
           ready: true,
         });
+        if (this.props.match.params.album) {
+          this.startAlbum(this.props.match.params.album);
+        }
       })
       .then(() => {
         this.chunkData(parseInt(this.props.match.params.page));
@@ -159,19 +170,25 @@ class Channel extends React.Component {
 
   chunkData(num, track) {
     let newarr = this.state.data.videos;
-    newarr = newarr.slice(num * 8, num * 8 + 8);
+    newarr = newarr.slice(num * 32, num * 32 + 32);
     this.setState({
       chunk: newarr,
     });
   }
 
-  startAlbum(link, title) {
-    this.setState({
-      nowPlaying: {
-        href: link,
-        title: title,
-      },
-    });
+  startAlbum(vidId) {
+    if (this.state.data) {
+      for (let x = 0; x < this.state.data.videos.length; x++) {
+        if (this.state.data.videos[x].list_videoId === vidId) {
+          this.setState({
+            nowPlaying: {
+              href: this.state.data.videos[x].list_videoLink,
+              title: this.state.data.videos[x].list_videoTitle,
+            },
+          });
+        }
+      }
+    }
   }
 
   closePlayer() {
@@ -186,26 +203,51 @@ class Channel extends React.Component {
         {this.state.ready ? (
           <ChannelWrapper>
             <h1> {this.state.data.title} </h1>
-            <h2> {this.state.data.message} </h2>
             <div className="elements">
+              <div className="pagination">
+                {parseInt(this.props.match.params.page) !== 0 && (
+                  <Link
+                    to={
+                      "/" +
+                      this.props.match.params.channel +
+                      "/" +
+                      (parseInt(this.props.match.params.page) - 1)
+                    }
+                  >
+                    <span className="fa fa-angle-left"></span>
+                  </Link>
+                )}
+                {this.state.chunk && this.state.chunk.length > 0 && (
+                  <Link
+                    to={
+                      "/" +
+                      this.props.match.params.channel +
+                      "/" +
+                      (parseInt(this.props.match.params.page) + 1)
+                    }
+                  >
+                    <span className="fa fa-angle-right"></span>
+                  </Link>
+                )}
+              </div>
               {this.state.chunk &&
                 this.state.chunk.map((element, index) => (
                   <Link
                     className="element"
                     key={index}
-                    onClick={() =>
-                      this.startAlbum(
-                        element.list_videoLink,
-                        element.list_videoTitle
-                      )
-                    }
+                    // onClick={() =>
+                    //   this.startAlbum(
+                    //     element.list_videoLink,
+                    //     element.list_videoTitle
+                    //   )
+                    // }
                     to={
                       "/" +
                       this.props.match.params.channel +
                       "/" +
                       this.props.match.params.page +
                       "/" +
-                      index
+                      element.list_videoId
                     }
                   >
                     <div className="image">
@@ -258,6 +300,22 @@ class Channel extends React.Component {
                   this.props.match.params.channel +
                   "/" +
                   this.props.match.params.page
+                }
+                nextHandler={
+                  "/" +
+                  this.props.match.params.channel +
+                  "/" +
+                  this.props.match.params.page +
+                  "/" +
+                  parseInt(this.props.match.params.album - -1)
+                }
+                prevHandler={
+                  "/" +
+                  this.props.match.params.channel +
+                  "/" +
+                  this.props.match.params.page +
+                  "/" +
+                  parseInt(this.props.match.params.album - 1)
                 }
               />
             )}
