@@ -5,6 +5,8 @@ import Footer from "Components/Segments/Footer/Footer";
 import Home from "Views/Home";
 import Channel from "Views/Channel";
 import SpacerFix from "Components/Elements/SpacerFix";
+import Reviews from "Views/Reviews";
+import Article from "Views/Article";
 import "./App.css";
 import "./Animations.css";
 
@@ -17,6 +19,14 @@ function App() {
         <Route exact path="/">
           <Home />
         </Route>
+        <Route
+          path="/rev/:page?"
+          component={(props) => <Reviews {...props} />}
+        />
+        <Route
+          path="/art-:id/:title?/"
+          component={(props) => <Article {...props} />}
+        />
         <Route
           path="/:channel/:page/:album?"
           component={(props) => <Channel {...props} />}

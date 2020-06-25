@@ -115,13 +115,10 @@ class Header extends React.Component {
   }
 
   showMenu() {
-    if (!this.state.subMenu) {
-      this.setState({
-        subMenu: true,
-      });
-    } else {
-      this.closeMenu();
-    }
+    this.setState({
+      subMenu: true,
+    });
+    document.addEventListener("click", this.closeMenu, true);
   }
 
   closeMenu() {
@@ -134,6 +131,7 @@ class Header extends React.Component {
         menuIsCloseing: false,
       });
     }, 300);
+    document.removeEventListener("click", this.closeMenu, true);
   }
 
   render() {
@@ -151,7 +149,7 @@ class Header extends React.Component {
                 <li>
                   <Link to="/">Strona główna</Link>
                 </li>
-                <li onClick={this.showMenu}>
+                <li onClick={this.state.subMenu ? false : this.showMenu}>
                   Kanały{" "}
                   {this.state.subMenu ? (
                     <span className="fa fa-angle-up"></span>
@@ -160,7 +158,7 @@ class Header extends React.Component {
                   )}
                 </li>
                 <li>
-                  <Link to="/Recenzje">Recenzje</Link>
+                  <Link to="/rev">Recenzje</Link>
                 </li>
                 <li>
                   <Link to="/Kontakt">Kontakt</Link>
