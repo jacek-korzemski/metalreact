@@ -34,6 +34,23 @@ const ReviewWrapper = styled.div`
       }
     }
   }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 30px;
+    a {
+      display: block;
+      font-size: 64px;
+      margin: 0 16px;
+      color: black;
+      text-decoration: none;
+      &:hover {
+        color: red;
+      }
+    }
+  }
 `;
 
 class Reviews extends React.Component {
@@ -43,9 +60,20 @@ class Reviews extends React.Component {
     this.state = {
       ready: false,
       content: false,
+      lastPage: false,
     };
 
     this.loadData = this.loadData.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.page !== this.props.match.params.page) {
+      if (isNaN(this.props.match.params.page)) {
+        this.loadData(1);
+      } else {
+        this.loadData(parseInt(this.props.match.params.page));
+      }
+    }
   }
 
   componentDidMount() {
@@ -57,12 +85,15 @@ class Reviews extends React.Component {
   }
 
   loadData(page) {
+    this.setState({ ready: false, lastPage: false });
     fetch(
       "http://metalmusic.pl/wp-json/wp/v2/posts?page=" + page + "&per_page=16"
     )
       .then((res) => {
         if (!res.ok) {
-          console.log("jebło");
+          this.setState({
+            lastPage: true,
+          });
         } else {
           return res.json();
         }
@@ -83,6 +114,38 @@ class Reviews extends React.Component {
       <>
         {this.state.ready ? (
           <ReviewWrapper>
+            <div className="pagination">
+              {this.props.match.params.page &&
+                parseInt(this.props.match.params.page) !== 1 && (
+                  <Link
+                    to={"/rev/" + (parseInt(this.props.match.params.page) - 1)}
+                  >
+                    <span className="fa fa-angle-left"></span>
+                  </Link>
+                )}
+              {!this.state.lastPage && (
+                <Link
+                  to={
+                    this.props.match.params.page
+                      ? "/rev/" + (parseInt(this.props.match.params.page) + 1)
+                      : "/rev/2"
+                  }
+                >
+                  <span className="fa fa-angle-right"></span>
+                </Link>
+              )}
+            </div>
+            {this.state.lastPage && (
+              <h2
+                style={{
+                  textAlign: "center",
+                  width: "100%",
+                  marginBottom: "32px",
+                }}
+              >
+                To już ostatnia strona, dalej nie ma żadnej treści :(
+              </h2>
+            )}
             <div className="elements">
               {this.state.content && (
                 <>
@@ -96,6 +159,26 @@ class Reviews extends React.Component {
                     </Link>
                   ))}
                 </>
+              )}
+            </div>
+            <div className="pagination">
+              {this.props.match.params.page && (
+                <Link
+                  to={"/rev/" + (parseInt(this.props.match.params.page) - 1)}
+                >
+                  <span className="fa fa-angle-left"></span>
+                </Link>
+              )}
+              {!this.state.lastPage && (
+                <Link
+                  to={
+                    this.props.match.params.page
+                      ? "/rev/" + (parseInt(this.props.match.params.page) + 1)
+                      : "/rev/2"
+                  }
+                >
+                  <span className="fa fa-angle-right"></span>
+                </Link>
               )}
             </div>
           </ReviewWrapper>

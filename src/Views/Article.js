@@ -5,9 +5,17 @@ import ReactHtmlParser from "react-html-parser";
 
 const ArticleWrapper = styled.div`
   min-height: calc(100vh - 64px);
-  max-width: 1400px;
+  max-width: 960px;
+  padding: 0 16px;
   margin: 0 auto;
   padding-bottom: 64px;
+  font-size: 24px;
+  figure {
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
 `;
 
 class Article extends React.Component {

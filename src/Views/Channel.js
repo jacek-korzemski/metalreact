@@ -7,6 +7,7 @@ import Player from "Components/Segments/Player/Player";
 
 const ChannelWrapper = styled.div`
   max-width: 1400px;
+  width: 100%;
   min-height: calc(100vh - 64px);
   margin: 0 auto;
   display: flex;
@@ -30,6 +31,7 @@ const ChannelWrapper = styled.div`
     justify-content: flex-start;
     align-items: stretch;
     flex-wrap: wrap;
+    width: 100%;
     .element {
       margin: 0.45%;
       width: 24%;

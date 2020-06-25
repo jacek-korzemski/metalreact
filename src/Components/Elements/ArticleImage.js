@@ -16,6 +16,12 @@ const ImageWrapper = styled.div`
     height: 100%;
     display: block;
   }
+  .blank {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: black;
+  }
 `;
 
 class ArticleImage extends React.Component {
@@ -58,20 +64,29 @@ class ArticleImage extends React.Component {
     return (
       <ImageWrapper>
         {this.state.ready ? (
-          <div
-            className="image"
-            style={{
-              background:
-                'url("' +
-                ReactHtmlParser(
-                  this.state.image.media_details.sizes.medium.source_url
-                ) +
-                '")',
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
-          />
+          <>
+            {this.state.image &&
+            this.state.image.media_details &&
+            this.state.image.media_details.sizes &&
+            this.state.image.media_details.sizes.medium &&
+            this.state.image.media_details.sizes.medium.source_url ? (
+              <div
+                className="image"
+                style={{
+                  background:
+                    'url("' +
+                    ReactHtmlParser(
+                      this.state.image.media_details.sizes.medium.source_url
+                    ) +
+                    '")',
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              ></div>
+            ) : (
+              <div className="blank"></div>
+            )}
+          </>
         ) : (
           <Loading small />
         )}

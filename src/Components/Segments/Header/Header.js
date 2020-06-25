@@ -158,10 +158,7 @@ class Header extends React.Component {
                   )}
                 </li>
                 <li>
-                  <Link to="/rev">Recenzje</Link>
-                </li>
-                <li>
-                  <Link to="/Kontakt">Kontakt</Link>
+                  <Link to="/rev/1">Recenzje i artykuły</Link>
                 </li>
               </ul>
             </div>

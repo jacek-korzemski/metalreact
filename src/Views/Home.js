@@ -9,6 +9,7 @@ const HomeWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  font-size: 20px;
   h1 {
     width: 100%;
     text-align: center;
