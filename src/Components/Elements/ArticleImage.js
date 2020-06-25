@@ -4,14 +4,15 @@ import Loading from "Components/Elements/Loading";
 import ReactHtmlParser from "react-html-parser";
 
 const ImageWrapper = styled.div`
+  position: relative;
   width: 100%;
   height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  img {
-    width: auto;
+  .image {
+    width: 100%;
     height: 100%;
     display: block;
   }
@@ -57,11 +58,19 @@ class ArticleImage extends React.Component {
     return (
       <ImageWrapper>
         {this.state.ready ? (
-          <img
-            src={ReactHtmlParser(
-              this.state.image.media_details.sizes.medium.source_url
-            )}
-            alt={this.props.alt}
+          <div
+            className="image"
+            style={{
+              background:
+                'url("' +
+                ReactHtmlParser(
+                  this.state.image.media_details.sizes.medium.source_url
+                ) +
+                '")',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
           />
         ) : (
           <Loading small />

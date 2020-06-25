@@ -58,7 +58,7 @@ class Reviews extends React.Component {
 
   loadData(page) {
     fetch(
-      "http://metalmusic.pl/wp-json/wp/v2/posts?page=" + page + "&per_page=10"
+      "http://metalmusic.pl/wp-json/wp/v2/posts?page=" + page + "&per_page=16"
     )
       .then((res) => {
         if (!res.ok) {
