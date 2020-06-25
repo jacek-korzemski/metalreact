@@ -10,6 +10,8 @@ const ReviewWrapper = styled.div`
   max-width: 1400px;
   margin: 0 auto;
   padding-bottom: 64px;
+  padding-left: 16px;
+  padding-right: 16px;
   figure {
     margin: 0 auto;
     padding: 16px 0;
@@ -31,6 +33,12 @@ const ReviewWrapper = styled.div`
       text-decoration: none;
       &:hover {
         color: red;
+      }
+      @media (max-width: 1024px) {
+        width: 49%;
+      }
+      @media (max-width: 640px) {
+        width: 99%;
       }
     }
   }
@@ -162,13 +170,14 @@ class Reviews extends React.Component {
               )}
             </div>
             <div className="pagination">
-              {this.props.match.params.page && (
-                <Link
-                  to={"/rev/" + (parseInt(this.props.match.params.page) - 1)}
-                >
-                  <span className="fa fa-angle-left"></span>
-                </Link>
-              )}
+              {this.props.match.params.page &&
+                parseInt(this.props.match.params.page) !== 1 && (
+                  <Link
+                    to={"/rev/" + (parseInt(this.props.match.params.page) - 1)}
+                  >
+                    <span className="fa fa-angle-left"></span>
+                  </Link>
+                )}
               {!this.state.lastPage && (
                 <Link
                   to={

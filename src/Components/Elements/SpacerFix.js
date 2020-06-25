@@ -4,7 +4,7 @@ import styled from "styled-components";
 const SpacerFixWrapper = styled.div`
   height: 64px;
   @media (max-width: 640px) {
-    height: 128px;
+    display: none;
   }
 `;
 

@@ -16,6 +16,7 @@ const HeadWrapper = styled.div`
   @media (max-width: 640px) {
     max-height: 128px;
     min-height: 128px;
+    position: relative;
   }
   img {
     max-height: 64px;
@@ -70,7 +71,8 @@ const ChannelsWrapper = styled.div`
   animation: slideIn 0.3s forwards;
   z-index: 100;
   @media (max-width: 640px) {
-    top: 128px;
+    top: 0;
+    position: relative;
   }
   ul {
     list-style-type: none;
