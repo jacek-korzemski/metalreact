@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Loading from "Components/Elements/Loading";
 import ReactHtmlParser from "react-html-parser";
+import Header from "Components/Segments/Header/Header";
 
 const ArticleWrapper = styled.div`
   min-height: calc(100vh - 64px);
@@ -26,6 +27,8 @@ class Article extends React.Component {
       ready: false,
       content: false,
     };
+
+    this.openMenu = this.openMenu.bind(this);
   }
 
   componentDidMount() {
@@ -53,9 +56,14 @@ class Article extends React.Component {
       });
   }
 
+  openMenu() {
+    this.props.channelsHandler();
+  }
+
   render() {
     return (
       <>
+        <Header channelsHandler={this.openMenu} />
         {this.state.ready ? (
           <ArticleWrapper>
             <h1>{ReactHtmlParser(this.state.content.title.rendered)}</h1>

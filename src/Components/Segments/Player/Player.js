@@ -27,7 +27,7 @@ const PlayerWrapper = styled.div`
     max-width: 1400px;
     margin-bottom: 32px;
   }
-  .pagination {
+  .pagination-player {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,7 +54,15 @@ const Player = (props) => {
   href = href.replace("watch?v=", "embed/");
   return (
     <PlayerWrapper>
-      <div className="pagination">
+      <iframe
+        src={href}
+        title={props.track.title}
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        frameBorder={0}
+      ></iframe>
+      <h2>{props.track.title}</h2>
+      <div className="pagination-player">
         <Link to={props.nextHandler}>
           <span className="fa fa-angle-left"></span>
         </Link>
@@ -67,14 +75,6 @@ const Player = (props) => {
           <span className="fa fa-angle-right"></span>
         </Link>
       </div>
-      <iframe
-        src={href}
-        title={props.track.title}
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        frameBorder={0}
-      ></iframe>
-      <h2>{props.track.title}</h2>
     </PlayerWrapper>
   );
 };

@@ -4,6 +4,7 @@ import Loading from "Components/Elements/Loading";
 import ReactHtmlParser from "react-html-parser";
 import { Link } from "react-router-dom";
 import ArticleImage from "Components/Elements/ArticleImage";
+import Header from "Components/Segments/Header/Header";
 
 const ReviewWrapper = styled.div`
   min-height: calc(100vh - 64px);
@@ -120,6 +121,7 @@ class Reviews extends React.Component {
   render() {
     return (
       <>
+        <Header />
         {this.state.ready ? (
           <ReviewWrapper>
             <div className="pagination">

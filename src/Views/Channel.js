@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Loading from "Components/Elements/Loading";
 import { withRouter } from "react-router-dom";
 import Player from "Components/Segments/Player/Player";
+import Header from "Components/Segments/Header/Header";
 
 const ChannelWrapper = styled.div`
   max-width: 1400px;
@@ -33,7 +34,7 @@ const ChannelWrapper = styled.div`
     flex-wrap: wrap;
     width: 100%;
     .element {
-      margin: 0.45%;
+      margin: 16px 0.45%;
       width: 24%;
       cursor: pointer;
       .image {
@@ -77,7 +78,7 @@ const ChannelWrapper = styled.div`
     align-items: center;
     width: 100%;
     padding-bottom: 30px;
-    a {
+    span {
       display: block;
       font-size: 64px;
       margin: 0 16px;
@@ -98,12 +99,14 @@ class Channel extends React.Component {
       data: null,
       chunk: null,
       nowPlaying: false,
+      clickedMore: 0,
     };
 
     this.loadData = this.loadData.bind(this);
-    this.chunkData = this.chunkData.bind(this);
     this.startAlbum = this.startAlbum.bind(this);
     this.closePlayer = this.closePlayer.bind(this);
+    this.openMenu = this.openMenu.bind(this);
+    this.loadMore = this.loadMore.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -114,12 +117,9 @@ class Channel extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.match.params.channel !== this.props.match.params.channel) {
       this.loadData();
-    }
-    if (prevProps.match.params.page !== this.props.match.params.page) {
-      this.chunkData(this.props.match.params.page);
     }
     if (prevProps.match.params.album !== this.props.match.params.album) {
       this.startAlbum(this.props.match.params.album);
@@ -134,11 +134,6 @@ class Channel extends React.Component {
     this.setState({
       ready: false,
     });
-    console.log(
-      "http://katalog.metalmusic.pl/" +
-        this.props.match.params.channel +
-        "/getjson/0"
-    );
     fetch(
       "http://katalog.metalmusic.pl/" +
         this.props.match.params.channel +
@@ -163,19 +158,11 @@ class Channel extends React.Component {
         }
       })
       .then(() => {
-        this.chunkData(parseInt(this.props.match.params.page));
+        this.chunkData(this.state.clickedMore);
       })
       .catch((err) => {
         console.log(err);
       });
-  }
-
-  chunkData(num, track) {
-    let newarr = this.state.data.videos;
-    newarr = newarr.slice(num * 32, num * 32 + 32);
-    this.setState({
-      chunk: newarr,
-    });
   }
 
   startAlbum(vidId) {
@@ -199,39 +186,40 @@ class Channel extends React.Component {
     });
   }
 
+  openMenu() {
+    this.props.channelsHandler();
+  }
+
+  chunkData(num) {
+    let newarr = this.state.data.videos;
+    newarr = newarr.slice(num * 32, num * 32 + 32);
+    this.setState({
+      chunk: newarr,
+    });
+  }
+
+  loadMore() {
+    this.setState({
+      clickedMore: this.state.clickedMore + 1,
+    });
+    let newarr = this.state.data.videos;
+    newarr = newarr.slice(
+      this.state.clickedMore * 32,
+      this.state.clickedMore * 32 + 32
+    );
+    this.setState({
+      chunk: this.state.chunk.concat(newarr),
+    });
+  }
+
   render() {
     return (
       <>
+        <Header channelsHandler={this.openMenu} />
         {this.state.ready ? (
           <ChannelWrapper>
             <h1> {this.state.data.title} </h1>
             <div className="elements">
-              <div className="pagination">
-                {parseInt(this.props.match.params.page) !== 0 && (
-                  <Link
-                    to={
-                      "/" +
-                      this.props.match.params.channel +
-                      "/" +
-                      (parseInt(this.props.match.params.page) - 1)
-                    }
-                  >
-                    <span className="fa fa-angle-left"></span>
-                  </Link>
-                )}
-                {this.state.chunk && this.state.chunk.length > 0 && (
-                  <Link
-                    to={
-                      "/" +
-                      this.props.match.params.channel +
-                      "/" +
-                      (parseInt(this.props.match.params.page) + 1)
-                    }
-                  >
-                    <span className="fa fa-angle-right"></span>
-                  </Link>
-                )}
-              </div>
               {this.state.chunk &&
                 this.state.chunk.map((element, index) => (
                   <Link
@@ -240,8 +228,6 @@ class Channel extends React.Component {
                     to={
                       "/" +
                       this.props.match.params.channel +
-                      "/" +
-                      this.props.match.params.page +
                       "/" +
                       element.list_videoId
                     }
@@ -262,54 +248,27 @@ class Channel extends React.Component {
                 <h1>Doszedłeś do końca, nie ma więcej metalu tutaj :(</h1>
               )}
             <div className="pagination">
-              {parseInt(this.props.match.params.page) !== 0 && (
-                <Link
-                  to={
-                    "/" +
-                    this.props.match.params.channel +
-                    "/" +
-                    (parseInt(this.props.match.params.page) - 1)
-                  }
-                >
-                  <span className="fa fa-angle-left"></span>
-                </Link>
-              )}
               {this.state.chunk && this.state.chunk.length > 0 && (
-                <Link
-                  to={
-                    "/" +
-                    this.props.match.params.channel +
-                    "/" +
-                    (parseInt(this.props.match.params.page) + 1)
-                  }
-                >
-                  <span className="fa fa-angle-right"></span>
-                </Link>
+                <span
+                  className="fa fa-angle-down"
+                  onClick={this.loadMore}
+                ></span>
               )}
             </div>
             {this.state.nowPlaying && (
               <Player
                 track={this.state.nowPlaying}
                 closeHandler={this.closePlayer}
-                returnHandler={
-                  "/" +
-                  this.props.match.params.channel +
-                  "/" +
-                  this.props.match.params.page
-                }
+                returnHandler={"/" + this.props.match.params.channel}
                 nextHandler={
                   "/" +
                   this.props.match.params.channel +
-                  "/" +
-                  this.props.match.params.page +
                   "/" +
                   parseInt(this.props.match.params.album - -1)
                 }
                 prevHandler={
                   "/" +
                   this.props.match.params.channel +
-                  "/" +
-                  this.props.match.params.page +
                   "/" +
                   parseInt(this.props.match.params.album - 1)
                 }

@@ -1,48 +1,96 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import blacklogo from "Data/white-logo.png";
 
 const HomeWrapper = styled.div`
-  max-width: 1400px;
-  min-height: calc(100vh - 64px);
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  font-size: 20px;
-  padding-bottom: 64px;
-  padding-left: 16px;
-  padding-right: 16px;
-  h1 {
+  background: white;
+  .grid {
+    background: black;
     width: 100%;
-    text-align: center;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100px 1fr 1fr;
+    grid-template-areas: "logo logo" "top top" "left right";
   }
-  p {
-    width: 100%;
-    text-align: center;
+
+  .flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .logo {
+    grid-area: logo;
+  }
+
+  .top {
+    grid-area: top;
+  }
+
+  .left {
+    grid-area: left;
+  }
+
+  .right {
+    grid-area: right;
+  }
+  a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    font-size: 64px;
+    transition: all 0.3s;
+    &:hover {
+      color: black;
+      background: white;
+    }
   }
 `;
 
-const Home = () => {
-  return (
-    <HomeWrapper>
-      <h1> MetalReact.pl </h1>
-      <p>
-        Wygodna kompilacja najlepszych kanałów na youtube promujących młode
-        zespoły muzyczne z gatunku Rock/Metal. Główna idea która przyświeca
-        serwisowi to ułatwienie słuchaczom przeglądanie nowej muzyki.
-        Przeglądanie bezpośrednio w serwisie YouTube wiąże się ze skakaniem po
-        kanałach i ich zakładkach, a czasem nawet samo znalezienie kanału nie
-        należy do najłatwiejszych.
-      </p>
-      <p>
-        Na MetalReact.pl znajdziesz 19 najpopularniejszych kanałów które
-        umieszczają pełne albumy i/lub pojedyncze utwory niszowych zespołów.
-        Wszystkie kanały w serwisie są aktualizowane raz dziennie, więc nie
-        przegapisz żadnych nowości!
-      </p>
-    </HomeWrapper>
-  );
-};
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+  render() {
+    return (
+      <>
+        <HomeWrapper>
+          <div className="grid">
+            <div className="logo flex">
+              <img src={blacklogo} alt="React Metal Music" />
+            </div>
+            <Link
+              to="/"
+              onClick={this.props.channelsHandler}
+              className="top flex"
+              style={{ borderBottom: "5px solid white" }}
+            >
+              <i className="fas fa-music"></i>
+            </Link>
+            <Link
+              to="/"
+              className="left flex"
+              style={{ borderRight: "2.5px solid white" }}
+            >
+              <i className="far fa-newspaper"></i>
+            </Link>
+            <Link
+              to="/"
+              className="right flex"
+              style={{ borderLeft: "2.5px solid white" }}
+            >
+              <i className="far fa-heart"></i>
+            </Link>
+          </div>
+        </HomeWrapper>
+      </>
+    );
+  }
+}
 
 export default Home;
