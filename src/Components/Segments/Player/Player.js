@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import MetaTags from "react-meta-tags";
 
 const PlayerWrapper = styled.div`
   position: fixed;
@@ -54,6 +55,9 @@ const Player = (props) => {
   href = href.replace("watch?v=", "embed/");
   return (
     <PlayerWrapper>
+      <MetaTags>
+        <title>{props.track.title}</title>
+      </MetaTags>
       <iframe
         src={href}
         title={props.track.title}

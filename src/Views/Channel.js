@@ -5,6 +5,7 @@ import Loading from "Components/Elements/Loading";
 import { withRouter } from "react-router-dom";
 import Player from "Components/Segments/Player/Player";
 import Header from "Components/Segments/Header/Header";
+import MetaTags from "react-meta-tags";
 
 const ChannelWrapper = styled.div`
   max-width: 1400px;
@@ -215,6 +216,22 @@ class Channel extends React.Component {
   render() {
     return (
       <>
+        <MetaTags>
+          <title>
+            {this.state.data && this.state.data.title
+              ? this.state.data.title
+              : "Wczytywanie"}
+          </title>
+          <meta
+            id="meta-description"
+            name="description"
+            content={`Najnowsze materiały z kanału ${
+              this.state.data && this.state.data.title
+                ? this.state.data.title
+                : ""
+            } - sprawdź!`}
+          />
+        </MetaTags>
         <Header channelsHandler={this.openMenu} />
         {this.state.ready ? (
           <ChannelWrapper>

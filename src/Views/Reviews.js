@@ -5,6 +5,7 @@ import ReactHtmlParser from "react-html-parser";
 import { Link } from "react-router-dom";
 import ArticleImage from "Components/Elements/ArticleImage";
 import Header from "Components/Segments/Header/Header";
+import MetaTags from "react-meta-tags";
 
 const ReviewWrapper = styled.div`
   min-height: calc(100vh - 64px);
@@ -121,6 +122,14 @@ class Reviews extends React.Component {
   render() {
     return (
       <>
+        <MetaTags>
+          <title>Artykuły z metalmusic.pl</title>
+          <meta
+            id="meta-description"
+            name="description"
+            content="Najświeższe artykuły z portalu metalmusic.pl - recenzje, zapowiedzi, polecane i nie polecane."
+          />
+        </MetaTags>
         <Header />
         {this.state.ready ? (
           <ReviewWrapper>

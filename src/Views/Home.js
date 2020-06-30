@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import blacklogo from "Data/white-logo.png";
+import MetaTags from "react-meta-tags";
 
 const HomeWrapper = styled.div`
   background: white;
@@ -59,6 +60,16 @@ class Home extends React.Component {
   render() {
     return (
       <>
+        <MetaTags>
+          <title>
+            React.Metalmusic.pl - Twój podziemny metal w jednym miejscu!
+          </title>
+          <meta
+            id="meta-description"
+            name="description"
+            content="Pełne albumy kolekcjonowane na bieżąco z 19 kanałów na youtube, artykuły z metalmusic.pl, możliwość przechowywania swoich ulubionych albumów w pamięci przeglądarki. To wszystko znajdziesz tutaj."
+          />
+        </MetaTags>
         <HomeWrapper>
           <div className="grid">
             <div className="logo flex">
