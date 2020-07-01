@@ -62,6 +62,7 @@ class Channel extends React.Component {
       chunk: null,
       nowPlaying: false,
       clickedMore: 0,
+      faves: [],
     };
 
     this.loadData = this.loadData.bind(this);
@@ -69,6 +70,7 @@ class Channel extends React.Component {
     this.closePlayer = this.closePlayer.bind(this);
     this.openMenu = this.openMenu.bind(this);
     this.loadMore = this.loadMore.bind(this);
+    this.loadFaves = this.loadFaves.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -82,6 +84,7 @@ class Channel extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.channel !== this.props.match.params.channel) {
       this.loadData();
+      this.loadFaves();
     }
     if (prevProps.match.params.album !== this.props.match.params.album) {
       this.startAlbum(this.props.match.params.album);
@@ -90,9 +93,25 @@ class Channel extends React.Component {
 
   componentDidMount() {
     this.loadData();
+    this.loadFaves();
   }
 
-  loadData(withTrack) {
+  loadFaves() {
+    if (localStorage.getItem("fav")) {
+      let favs = JSON.parse(localStorage.getItem("fav"));
+      let indexes = [];
+      for (let i = 0; i < favs.fav.length; i++) {
+        if (this.props.match.params.channel === favs.fav[i].channel) {
+          indexes.push(favs.fav[i].id);
+        }
+      }
+      this.setState({
+        faves: indexes,
+      });
+    }
+  }
+
+  loadData() {
     this.setState({
       ready: false,
     });
@@ -211,6 +230,8 @@ class Channel extends React.Component {
                         ? this.state.openedTooltip
                         : false
                     }
+                    isFav={this.state.faves}
+                    refreshFaves={this.loadFaves}
                   />
                 ))}
             </div>

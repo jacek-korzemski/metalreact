@@ -18,7 +18,8 @@ const ElementWrapper = styled.div`
     position: relative;
   }
   .gearHandler,
-  .playerHandler {
+  .playerHandler,
+  .fav {
     position: absolute;
     bottom: 4px;
     right: 4px;
@@ -40,6 +41,17 @@ const ElementWrapper = styled.div`
     font-size: 28px;
     color: black;
     text-decoration: none;
+  }
+  .fav {
+    top: 4px;
+    left: 4px;
+    right: initial;
+    bottom: initial;
+    background: transparent;
+    color: red;
+    box-shadow: none;
+    text-shadow: 0px 0px 10px pink;
+    animation: fadeIn 0.3s forwards;
   }
   .left {
     a {
@@ -63,6 +75,16 @@ class ListElementVideo extends React.Component {
     this.closeTooltip = this.closeTooltip.bind(this);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps !== this.props) {
+      return true;
+    } else if (nextState !== this.state) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   openTooltip() {
     this.setState({
       openedTooltip: true,
@@ -76,6 +98,7 @@ class ListElementVideo extends React.Component {
       });
     }, 45);
     document.removeEventListener("click", this.closeTooltip, true);
+    this.props.refreshFaves();
   }
 
   render() {
@@ -108,6 +131,11 @@ class ListElementVideo extends React.Component {
           >
             <span className="fas fa-play"></span>
           </Link>
+          {this.props.isFav.includes(this.props.id) && (
+            <div className="fav">
+              <span className="fas fa-heart"></span>
+            </div>
+          )}
         </div>
         <div className="left">
           <Link to={"/" + this.props.channel + "/" + this.props.id}>

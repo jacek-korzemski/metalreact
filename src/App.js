@@ -5,6 +5,7 @@ import Home from "Views/Home";
 import Channel from "Views/Channel";
 import Reviews from "Views/Reviews";
 import Article from "Views/Article";
+import Fav from "Views/Fav";
 import "./App.css";
 import "./Animations.css";
 import ChannelsList from "Components/Elements/ChannelsList";
@@ -49,6 +50,12 @@ class App extends React.Component {
                 path="/art-:id/:title?/"
                 render={(props) => (
                   <Article channelsHandler={this.openChannels} {...props} />
+                )}
+              />
+              <Route
+                path="/fav"
+                render={(props) => (
+                  <Fav channelsHandler={this.openChannels} {...props} />
                 )}
               />
               <Route

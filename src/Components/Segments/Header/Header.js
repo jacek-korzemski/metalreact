@@ -65,7 +65,7 @@ class Header extends React.Component {
           <span onClick={() => this.openMenu()}>
             <i className="fas fa-music"></i>
           </span>
-          <Link to="/fav/1">
+          <Link to="/fav">
             <i className="far fa-heart"></i>
           </Link>
           <Link to="/planned">

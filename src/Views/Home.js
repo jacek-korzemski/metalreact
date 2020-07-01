@@ -56,14 +56,19 @@ const HomeWrapper = styled.div`
   .fas.fa-fist-raised {
     position: fixed;
     display: block;
-    top: calc(50% - 88px);
-    left: calc(50% - 88px);
+    top: -94px;
+    left: calc(50% - 81.5px);
     padding: 64px;
     font-size: 42px;
     color: white;
     background: black;
     border: 5px solid white;
     z-index: 99;
+    transform: rotate(45deg);
+    &:before {
+      display: inline-block;
+      transform: rotate(-45deg) translate(0, 44px);
+    }
   }
 `;
 

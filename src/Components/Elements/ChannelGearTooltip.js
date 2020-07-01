@@ -86,6 +86,7 @@ class ChannelGearTooltip extends React.Component {
 
     this.closeFixer = this.closeFixer.bind(this);
     this.addToFav = this.addToFav.bind(this);
+    this.removeFromFav = this.removeFromFav.bind(this);
     this.addToPlan = this.addToPlan.bind(this);
     this.copyUrl = this.copyUrl.bind(this);
     this.loadFaves = this.loadFaves.bind(this);
@@ -117,6 +118,7 @@ class ChannelGearTooltip extends React.Component {
       this.props.closeHandler();
     }, 45);
   }
+
   addToFav() {
     if (!localStorage.getItem("fav")) {
       localStorage.setItem(
@@ -134,8 +136,22 @@ class ChannelGearTooltip extends React.Component {
       localStorage.setItem("fav", JSON.stringify(arr));
     }
   }
+
+  removeFromFav() {
+    let arr = JSON.parse(localStorage.getItem("fav")).fav;
+    let newArr = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].id !== this.props.id) {
+        newArr.push(arr[i]);
+      }
+    }
+    localStorage.setItem("fav", JSON.stringify({ fav: newArr }));
+  }
+
   addToPlan() {}
+
   copyUrl() {}
+
   render() {
     return (
       <TooltipWrapper onMouseLeave={this.closeFixer}>
@@ -145,7 +161,11 @@ class ChannelGearTooltip extends React.Component {
             className={
               this.state.faves.includes(this.props.id) ? "hr active" : "hr"
             }
-            onClick={this.addToFav}
+            onClick={
+              this.state.faves.includes(this.props.id)
+                ? this.removeFromFav
+                : this.addToFav
+            }
           >
             {this.state.faves.includes(this.props.id) ? (
               <i className="fas fa-heart"></i>
