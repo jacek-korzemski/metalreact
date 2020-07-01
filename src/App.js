@@ -41,19 +41,19 @@ class App extends React.Component {
               </Route>
               <Route
                 path="/rev/:page?"
-                component={(props) => (
+                render={(props) => (
                   <Reviews channelsHandler={this.openChannels} {...props} />
                 )}
               />
               <Route
                 path="/art-:id/:title?/"
-                component={(props) => (
+                render={(props) => (
                   <Article channelsHandler={this.openChannels} {...props} />
                 )}
               />
               <Route
                 path="/:channel/:album?"
-                component={(props) => (
+                render={(props) => (
                   <Channel channelsHandler={this.openChannels} {...props} />
                 )}
               />

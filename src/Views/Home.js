@@ -1,53 +1,69 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import blacklogo from "Data/white-logo.png";
 import MetaTags from "react-meta-tags";
 
 const HomeWrapper = styled.div`
   background: white;
-  .grid {
-    background: black;
+
+  .grid-container {
     width: 100%;
     height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: white;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 100px 1fr 1fr;
-    grid-template-areas: "logo logo" "top top" "left right";
+    grid-template-rows: 1fr 1fr;
+    gap: 5px 5px;
+    grid-template-areas: "top-left top-right" "bottom-left bottom-right";
   }
 
-  .flex {
+  .top-left {
+    grid-area: top-left;
+  }
+
+  .top-right {
+    grid-area: top-right;
+  }
+
+  .bottom-left {
+    grid-area: bottom-left;
+  }
+
+  .bottom-right {
+    grid-area: bottom-right;
+  }
+  .top-left,
+  .top-right,
+  .bottom-left,
+  .bottom-right {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  }
-
-  .logo {
-    grid-area: logo;
-  }
-
-  .top {
-    grid-area: top;
-  }
-
-  .left {
-    grid-area: left;
-  }
-
-  .right {
-    grid-area: right;
-  }
-  a {
-    display: block;
     color: white;
+    background: black;
+    cursor: pointer;
     text-decoration: none;
     font-size: 64px;
     transition: all 0.3s;
     &:hover {
-      color: black;
       background: white;
+      color: black;
     }
+  }
+  .fas.fa-fist-raised {
+    position: fixed;
+    display: block;
+    top: calc(50% - 88px);
+    left: calc(50% - 88px);
+    padding: 64px;
+    font-size: 42px;
+    color: white;
+    background: black;
+    border: 5px solid white;
+    z-index: 99;
   }
 `;
 
@@ -71,33 +87,21 @@ class Home extends React.Component {
           />
         </MetaTags>
         <HomeWrapper>
-          <div className="grid">
-            <div className="logo flex">
-              <img src={blacklogo} alt="React Metal Music" />
-            </div>
-            <Link
-              to="/"
-              onClick={this.props.channelsHandler}
-              className="top flex"
-              style={{ borderBottom: "5px solid white" }}
-            >
-              <i className="fas fa-music"></i>
+          <div className="grid-container">
+            <Link className="top-left" onClick={this.props.channelsHandler}>
+              <span className="fa fa-music"></span>
             </Link>
-            <Link
-              to="/"
-              className="left flex"
-              style={{ borderRight: "2.5px solid white" }}
-            >
-              <i className="far fa-newspaper"></i>
+            <Link className="top-right" to="/fav">
+              <span className="fa fa-heart"></span>
             </Link>
-            <Link
-              to="/"
-              className="right flex"
-              style={{ borderLeft: "2.5px solid white" }}
-            >
-              <i className="far fa-heart"></i>
+            <Link className="bottom-left" to="/planned">
+              <span className="far fa-clock"></span>
+            </Link>
+            <Link className="bottom-right" to="/rev/1">
+              <span className="fas fa-book-open"></span>
             </Link>
           </div>
+          <span className="fas fa-fist-raised"></span>
         </HomeWrapper>
       </>
     );

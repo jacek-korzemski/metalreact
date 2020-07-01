@@ -62,17 +62,17 @@ class Header extends React.Component {
           </div>
         </HeadWrapper>
         <MenuWrapper>
-          <Link to="/">
-            <i className="fas fa-home"></i>
-          </Link>
           <span onClick={() => this.openMenu()}>
             <i className="fas fa-music"></i>
           </span>
-          <Link to="/rev/1">
-            <i className="far fa-newspaper"></i>
-          </Link>
           <Link to="/fav/1">
             <i className="far fa-heart"></i>
+          </Link>
+          <Link to="/planned">
+            <i className="far fa-clock"></i>
+          </Link>
+          <Link to="/rev/1">
+            <i className="fas fa-book-open"></i>
           </Link>
         </MenuWrapper>
       </>

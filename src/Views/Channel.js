@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import Loading from "Components/Elements/Loading";
 import { withRouter } from "react-router-dom";
 import Player from "Components/Segments/Player/Player";
 import Header from "Components/Segments/Header/Header";
 import MetaTags from "react-meta-tags";
+import ListElementVideo from "Components/Elements/ListElementVideo";
 
 const ChannelWrapper = styled.div`
   max-width: 1400px;
@@ -30,48 +30,9 @@ const ChannelWrapper = styled.div`
   }
   .elements {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     align-items: stretch;
     flex-wrap: wrap;
-    width: 100%;
-    .element {
-      margin: 16px 0.45%;
-      width: 24%;
-      cursor: pointer;
-      .image {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 200px;
-        width: 100%;
-        overflow: hidden;
-        img {
-          display: block;
-          height: 100%;
-          width: auto;
-        }
-      }
-      .title {
-        font-size: 20px;
-        text-align: center;
-      }
-      @media (max-width: 1280px) {
-        width: 49%;
-      }
-      @media (max-width: 640px) {
-        width: 100%;
-      }
-      &:hover {
-        .title {
-          color: red;
-        }
-      }
-    }
-    a {
-      color: black;
-      text-decoration: none;
-    }
   }
   .pagination {
     display: flex;
@@ -239,24 +200,18 @@ class Channel extends React.Component {
             <div className="elements">
               {this.state.chunk &&
                 this.state.chunk.map((element, index) => (
-                  <Link
-                    className="element"
+                  <ListElementVideo
                     key={index}
-                    to={
-                      "/" +
-                      this.props.match.params.channel +
-                      "/" +
-                      element.list_videoId
+                    id={element.list_videoId}
+                    img={element.list_videoImage}
+                    title={element.list_videoTitle}
+                    channel={this.props.match.params.channel}
+                    openedTooltip={
+                      this.state.openedTooltip
+                        ? this.state.openedTooltip
+                        : false
                     }
-                  >
-                    <div className="image">
-                      <img
-                        src={element.list_videoImage}
-                        alt={element.list_videoTitle}
-                      />
-                    </div>
-                    <div className="title">{element.list_videoTitle}</div>
-                  </Link>
+                  />
                 ))}
             </div>
             {parseInt(this.props.match.params.page) !== 0 &&
