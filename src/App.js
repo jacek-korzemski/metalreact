@@ -53,7 +53,7 @@ class App extends React.Component {
                 )}
               />
               <Route
-                path="/fav"
+                path="/fav/:channel?/:id?"
                 render={(props) => (
                   <Fav channelsHandler={this.openChannels} {...props} />
                 )}

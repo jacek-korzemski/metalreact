@@ -99,8 +99,8 @@ class Home extends React.Component {
             <Link className="top-right" to="/fav">
               <span className="fa fa-heart"></span>
             </Link>
-            <Link className="bottom-left" to="/planned">
-              <span className="far fa-clock"></span>
+            <Link className="bottom-left" to="/search">
+              <span className="fas fa-search"></span>
             </Link>
             <Link className="bottom-right" to="/rev/1">
               <span className="fas fa-book-open"></span>

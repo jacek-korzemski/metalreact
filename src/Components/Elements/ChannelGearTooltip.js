@@ -29,7 +29,7 @@ const TooltipWrapper = styled.div`
     box-shadow: 2px 2px 5px black;
     animation: fadeIn 0.3s forwards;
     display: flex;
-    width: 160px;
+    width: 90px;
     justify-content: space-between;
     padding: 8px 16px;
     border-radius: 8px;
@@ -172,9 +172,6 @@ class ChannelGearTooltip extends React.Component {
             ) : (
               <i className="far fa-heart"></i>
             )}
-          </li>
-          <li className="cl" onClick={this.addToPlan}>
-            <i className="far fa-clock"></i>
           </li>
           <li className="cp" onClick={this.copyUrl}>
             <i className="fas fa-copy"></i>

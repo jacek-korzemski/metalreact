@@ -67,17 +67,21 @@ const Player = (props) => {
       ></iframe>
       <h2>{props.track.title}</h2>
       <div className="pagination-player">
-        <Link to={props.nextHandler}>
-          <span className="fa fa-angle-left"></span>
-        </Link>
+        {props.prevHandler && (
+          <Link to={props.prevHandler}>
+            <span className="fa fa-angle-left"></span>
+          </Link>
+        )}
         <Link to={props.returnHandler}>
           <span className="close" onClick={() => props.closeHandler()}>
             X
           </span>
         </Link>
-        <Link to={props.prevHandler}>
-          <span className="fa fa-angle-right"></span>
-        </Link>
+        {props.nextHandler && (
+          <Link to={props.prevHandler}>
+            <span className="fa fa-angle-right"></span>
+          </Link>
+        )}
       </div>
     </PlayerWrapper>
   );

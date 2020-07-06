@@ -69,7 +69,7 @@ class Header extends React.Component {
             <i className="far fa-heart"></i>
           </Link>
           <Link to="/planned">
-            <i className="far fa-clock"></i>
+            <i className="fas fa-search"></i>
           </Link>
           <Link to="/rev/1">
             <i className="fas fa-book-open"></i>

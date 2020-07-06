@@ -63,7 +63,7 @@ const ElementWrapper = styled.div`
   }
 `;
 
-class ListElementVideo extends React.Component {
+class FavListElementVideo extends React.Component {
   constructor(props) {
     super(props);
 
@@ -127,18 +127,13 @@ class ListElementVideo extends React.Component {
           </div>
           <Link
             className="playerHandler"
-            to={"/" + this.props.channel + "/" + this.props.id}
+            to={"/fav/" + this.props.channel + "/" + this.props.id}
           >
             <span className="fas fa-play"></span>
           </Link>
-          {this.props.isFav && this.props.isFav.includes(this.props.id) && (
-            <div className="fav">
-              <span className="fas fa-heart"></span>
-            </div>
-          )}
         </div>
         <div className="left">
-          <Link to={"/" + this.props.channel + "/" + this.props.id}>
+          <Link to={"/fav/" + this.props.channel + "/" + this.props.id}>
             {this.props.title}
           </Link>
         </div>
@@ -147,4 +142,4 @@ class ListElementVideo extends React.Component {
   }
 }
 
-export default ListElementVideo;
+export default FavListElementVideo;
