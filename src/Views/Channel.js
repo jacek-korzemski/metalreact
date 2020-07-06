@@ -154,6 +154,8 @@ class Channel extends React.Component {
             nowPlaying: {
               href: this.state.data.videos[x].list_videoLink,
               title: this.state.data.videos[x].list_videoTitle,
+              id: this.state.data.videos[x].list_videoId,
+              channel: this.props.match.params.channel,
             },
           });
         }
@@ -165,6 +167,7 @@ class Channel extends React.Component {
     this.setState({
       nowPlaying: false,
     });
+    this.loadFaves();
   }
 
   openMenu() {
@@ -265,6 +268,7 @@ class Channel extends React.Component {
                   "/" +
                   parseInt(this.props.match.params.album - 1)
                 }
+                favHandler={"1"}
               />
             )}
           </ChannelWrapper>
